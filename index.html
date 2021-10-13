@@ -112,21 +112,21 @@
         };
 
 
-        const queue = [getSum, updateCounterEl, updateStepEl];
-
+        const queue = {
+            counter: [getSum, updateCounterEl],
+            step: [getSum, updateStepEl]
+        };
+        console.log('Start define property')
         Object.keys(data).forEach(key => {
             let value = data[key];
+            console.log(value)
             Object.defineProperty(data, key, {
                 get: function () {
-                    console.log('get');
-                    // queue.push();
                     return value;
                 },
                 set: function (newValue) {
-                    console.log('set');
-                    console.log(newValue)
                     value = newValue;
-                    queue.forEach(fn => fn());
+                    queue[key].forEach(fn => fn());
                 }
             });
         });
